@@ -1,2 +1,2 @@
 # project_starfall
-CTF{0$1nt_d0n3_w3b_$t4rt}
+EMK{0$1pm_i0p3_p3g_$v4ky}
