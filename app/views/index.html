@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portal</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0a0a0f;
+        --surface: #111118;
+        --border: #2a2a3a;
+        --accent: #00e5ff;
+        --accent2: #ff2d78;
+        --text: #d0d0e0;
+        --muted: #555570;
+        --mono: "Share Tech Mono", monospace;
+        --sans: "Syne", sans-serif;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: var(--mono);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+      }
+
+      /* Grid background */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+        pointer-events: none;
+      }
+
+      /* Glow orb */
+      body::after {
+        content: "";
+        position: fixed;
+        width: 600px;
+        height: 600px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(0, 229, 255, 0.06) 0%,
+          transparent 70%
+        );
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      .container {
+        width: 420px;
+        position: relative;
+        z-index: 1;
+        animation: fadeUp 0.6s ease both;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .header {
+        margin-bottom: 32px;
+        border-left: 2px solid var(--accent);
+        padding-left: 16px;
+      }
+
+      .header .label {
+        font-size: 10px;
+        letter-spacing: 0.25em;
+        color: var(--accent);
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      .header h1 {
+        font-family: var(--sans);
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        color: #fff;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        padding: 28px;
+        position: relative;
+      }
+
+      .card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(90deg, var(--accent), transparent);
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+
+      label {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.2em;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin-bottom: 6px;
+      }
+
+      input {
+        width: 100%;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 14px;
+        padding: 10px 12px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      input:focus {
+        border-color: var(--accent);
+      }
+
+      .btn {
+        width: 100%;
+        padding: 11px;
+        font-family: var(--mono);
+        font-size: 13px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        cursor: pointer;
+        border: none;
+        transition:
+          opacity 0.2s,
+          transform 0.1s;
+      }
+
+      .btn:active {
+        transform: scale(0.98);
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #000;
+        margin-bottom: 10px;
+      }
+
+      .btn-secondary {
+        background: transparent;
+        border: 1px solid var(--border);
+        color: var(--muted);
+      }
+
+      .btn-secondary:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+
+      .divider {
+        border: none;
+        border-top: 1px solid var(--border);
+        margin: 20px 0;
+      }
+
+      #status {
+        font-size: 12px;
+        min-height: 18px;
+        color: var(--muted);
+        margin-top: 14px;
+      }
+
+      #status.ok {
+        color: var(--accent);
+      }
+      #status.err {
+        color: var(--accent2);
+      }
+
+      #profile-box {
+        display: none;
+        margin-top: 16px;
+        background: var(--bg);
+        border: 1px solid var(--border);
+        padding: 14px;
+        font-size: 13px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-all;
+        color: var(--accent);
+      }
+
+      .footer {
+        margin-top: 20px;
+        font-size: 10px;
+        color: var(--muted);
+        letter-spacing: 0.15em;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="label">System Access</div>
+        <h1>User Portal</h1>
+      </div>
+
+      <div class="card">
+        <!-- Login -->
+        <div class="field">
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="enter username"
+            autocomplete="off"
+          />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" />
+        </div>
+        <button class="btn btn-primary" onclick="doLogin()">
+          Authenticate
+        </button>
+
+        <hr class="divider" />
+
+        <!-- Profile -->
+        <button class="btn btn-secondary" onclick="fetchProfile()">
+          Fetch Profile
+        </button>
+
+        <div id="status"></div>
+        <pre id="profile-box"></pre>
+      </div>
+
+      <div class="footer">session · encrypted · v1.0</div>
+    </div>
+
+    <script>
+      const status = document.getElementById("status");
+      const profileBox = document.getElementById("profile-box");
+
+      function setStatus(msg, type) {
+        status.textContent = msg;
+        status.className = type || "";
+      }
+
+      async function doLogin() {
+        const username = document.getElementById("username").value.trim();
+        const password = document.getElementById("password").value;
+
+        if (!username || !password) {
+          setStatus("// fields required", "err");
+          return;
+        }
+
+        setStatus("// authenticating…");
+        try {
+          const res = await fetch("/api/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            localStorage.setItem("token", data.token || "");
+            setStatus("// access granted", "ok");
+          } else {
+            setStatus("// " + (data.error || "invalid credentials"), "err");
+          }
+        } catch (e) {
+          setStatus("// connection failed", "err");
+        }
+      }
+
+      async function fetchProfile() {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          setStatus("// not authenticated", "err");
+          return;
+        }
+
+        const payload = JSON.parse(atob(token.split(".")[1]));
+        const username = payload.username;
+
+        setStatus("// loading profile…");
+        try {
+          const res = await fetch(`/api/user/profile?id=${username}`, {
+            headers: { Authorization: "Bearer " + token },
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            profileBox.style.display = "block";
+            profileBox.textContent = JSON.stringify(data, null, 2);
+            setStatus("// profile loaded", "ok");
+          } else {
+            profileBox.style.display = "none";
+            setStatus("// " + (data.error || "unauthorized"), "err");
+          }
+        } catch (e) {
+          setStatus("// request failed", "err");
+        }
+      }
+
+      document.getElementById("password").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") doLogin();
+      });
+    </script>
+  </body>
+</html>
