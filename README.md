@@ -39,8 +39,7 @@ Make sure you have the following installed before continuing:
 ### Using Docker (recommended)
 
 ```bash
-docker build -t project-starfall .
-docker run -p 3000:3000 project-starfall
+docker build -t project-starfall . && docker run --rm -p 3000:3000 project-starfall
 ```
 
 Then open your browser:
