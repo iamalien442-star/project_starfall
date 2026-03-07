@@ -3,10 +3,8 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const { SECRET_KEY } = require('../middleware/auth');
 
-// Hardcoded users for the challenge baseline
 const users = {
-  "user1": { password: "password123", role: "user" },
-  "admin": { password: "adminpassword", role: "admin" }
+  "user1": { password: "password123", role: "user" }
 };
 
 router.post('/login', (req, res) => {
@@ -19,7 +17,6 @@ router.post('/login', (req, res) => {
   const user = users[username];
 
   if (user && user.password === password) {
-    // Issue JWT
     const payload = {
       username: username,
       role: user.role

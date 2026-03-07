@@ -10,7 +10,6 @@ router.get('/profile', authMiddleware, (req, res) => {
   }
 
   if (req.user.username !== requestedId) {
-    // IDOR: leaks that the user exists, and hints at roles
     return res.status(403).json({ 
       error: 'Forbidden: You can only access your own profile',
       hint: 'Different roles have different access levels'

@@ -4,7 +4,6 @@ const router = express.Router();
 const { authMiddleware } = require('../middleware/auth');
 
 router.post('/export', authMiddleware, (req, res) => {
-  // Enforce admin role
   if (req.user.role !== "admin") {
     return res.status(403).json({ error: "Forbidden: Admin access required" });
   }
@@ -16,7 +15,6 @@ router.post('/export', authMiddleware, (req, res) => {
     "reward.png",
     (err) => {
       if (err) {
-        // Fallback just in case the data directory or png isn't created yet
         res.status(404).json({ error: "Reward file not found on server." });
       }
     }
