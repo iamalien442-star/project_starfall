@@ -1,5 +1,5 @@
 # project_starfall
-`EMK{0$1pm_i0p3_p3g_$v4ky}`
+`JPRCYPE{13j_Fu_90_IfW3}`
 
 > An unknown alien entity has infiltrated human digital infrastructure by stealing identities and blending into normal systems.
 >
